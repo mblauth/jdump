@@ -25,14 +25,13 @@ compileJava {
     ])
 }
 
-applicationDefaultJvmArgs = [
-        "--add-modules" , "jdk.jcmd",
-        "--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED",
-        "--add-exports", "jdk.jcmd/sun.tools.common=ALL-UNNAMED"
-]
-
 application {
     mainClass = 'JDump'
+    applicationDefaultJvmArgs = [
+            "--add-modules" , "jdk.jcmd",
+            "--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED",
+            "--add-exports", "jdk.jcmd/sun.tools.common=ALL-UNNAMED"
+    ]
 }
 
 test {
