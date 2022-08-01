@@ -4,7 +4,7 @@ jdump is a tool that creates multiple forms of dumps for multiple JVMs running o
 make it easier to request detailed JVM information for debugging issues on customer sites etc. without needing to brief
 them on the details of using jcmd or similar tools.
 
-`jdump -A` for example will provide all supported types of dumps for all running JVMs that it manages to connect to using the
+`java -jar jdump -A` for example will provide all supported types of dumps for all running JVMs that it manages to connect to using the
 Attach API.
 
 ## Supported dump types
@@ -17,7 +17,7 @@ Currently supported are
 
 ## Usage
 ```
-jdump [-A] [-H] [-T] [-J] [-d<duration in seconds>]
+java -jar jdump.jar [-A] [-H] [-T] [-J] [-d<duration in seconds>]
 
 Options:
 -A: produce all types of dumps for all JVMs running locally
@@ -26,3 +26,9 @@ Options:
 -J: produce JFRs for all JVMs running locally
 -d<duration in seconds>: the duration selected for the JFRs, in seconds, default: 5
 ```
+
+## Development
+
+To build and run the tool for testing, run ```./gradlew run --args="<tool arguments>"``` with the desired tool arguments.
+
+To build the tool into a jar file, run ```./gradlew jar```, the jar file will be generated in build/libs.
