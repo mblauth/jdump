@@ -1,6 +1,8 @@
+package dump;
+
 import java.util.Arrays;
 
-public class Arguments {
+class Arguments {
     final boolean wantHeapDumpForAll;
     final boolean wantThreadDumpForAll;
 

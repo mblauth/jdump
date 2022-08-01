@@ -1,4 +1,4 @@
-/*
+package dump;/*
  * Copyright (c) 2019, 2021, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -36,7 +36,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * A helper class which prints the content of input streams to print streams.
  * This class was originally written for the jcmd tool in the OpenJDK project.
  */
-public class PrintStreamPrinter {
+class PrintStreamPrinter {
 
     /**
      * Reads characters in UTF-8 format from the input stream and prints them

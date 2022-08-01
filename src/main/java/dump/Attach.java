@@ -1,3 +1,5 @@
+package dump;
+
 import com.sun.tools.attach.AttachNotSupportedException;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
@@ -7,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Attach {
+class Attach {
 
     private static final Map<String, HotSpotVirtualMachine> attachedVMs = new HashMap<>();
 
