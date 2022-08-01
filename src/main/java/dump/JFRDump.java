@@ -8,9 +8,11 @@ import sun.tools.attach.HotSpotVirtualMachine;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 
 public class JFRDump {
     private final String outputDirectory;
+    private Duration jfrDuration = Duration.ofSeconds(5);
 
     private JFRDump(String outputDirectory) {
         this.outputDirectory = outputDirectory;
@@ -18,6 +20,11 @@ public class JFRDump {
 
     static JFRDump in(String outputDirectory) {
         return new JFRDump(outputDirectory);
+    }
+
+    JFRDump with(Duration jfrDuration) {
+        this.jfrDuration = jfrDuration;
+        return this;
     }
 
     void performForAll() {
@@ -33,9 +40,10 @@ public class JFRDump {
 
     void performFor(VirtualMachineDescriptor virtualMachineDescriptor)
             throws IOException, AttachNotSupportedException {
-        System.out.println("Dumping JFR for JVM " + virtualMachineDescriptor.id());
+        System.out.println("Dumping a " + jfrDuration.toSeconds() + " second JFR for JVM " +
+                virtualMachineDescriptor.id());
         HotSpotVirtualMachine hvm = Attach.to(virtualMachineDescriptor);
-        InputStream is = hvm.executeJCmd( "JFR.start duration=5s name=jdump filename=" + outputDirectory +
+        InputStream is = hvm.executeJCmd( "JFR.start duration=" + jfrDuration.toSeconds() + "s name=jdump filename=" + outputDirectory +
                 File.separator + "jdump-jfr-" + virtualMachineDescriptor.id() + ".jfr");
        PrintStreamPrinter.drainUTF8(is, System.out);
     }
