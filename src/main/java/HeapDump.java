@@ -2,7 +2,6 @@ import com.sun.tools.attach.AttachNotSupportedException;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import sun.tools.attach.HotSpotVirtualMachine;
-import sun.tools.common.PrintStreamPrinter;
 
 import java.io.IOException;
 import java.io.InputStream;
