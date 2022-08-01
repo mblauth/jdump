@@ -49,7 +49,11 @@ class ThreadDump {
         System.out.println("Dumping threads for JVM " + virtualMachineDescriptor.id());
         HotSpotVirtualMachine hvm = Attach.to(virtualMachineDescriptor);
         InputStream is = hvm.executeCommand( "threaddump");
-        File outputFile = new File(outputDirectory + File.separator + "jdump-threads-" + virtualMachineDescriptor.id() + ".txt");
+        File outputFile = new File(filenameFor(virtualMachineDescriptor));
         Files.copy(is, outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
+        return outputDirectory + File.separator + "jdump-threads-" + virtualMachineDescriptor.id() + ".txt";
     }
 }

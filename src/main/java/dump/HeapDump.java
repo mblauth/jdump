@@ -5,6 +5,7 @@ import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import sun.tools.attach.HotSpotVirtualMachine;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -42,8 +43,11 @@ class HeapDump {
     void performFor(VirtualMachineDescriptor virtualMachineDescriptor)
             throws IOException, AttachNotSupportedException {
         HotSpotVirtualMachine hvm = Attach.to(virtualMachineDescriptor);
-        InputStream is =
-                hvm.dumpHeap(  outputDirectory + "/jdump-heap-" + virtualMachineDescriptor.id() + ".hprof");
+        InputStream is = hvm.dumpHeap(filenameFor(virtualMachineDescriptor));
         PrintStreamPrinter.drainUTF8(is, System.out);
+    }
+
+    private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
+        return outputDirectory + File.separator + "jdump-heap-" + virtualMachineDescriptor.id() + ".hprof";
     }
 }

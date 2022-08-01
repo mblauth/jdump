@@ -43,8 +43,12 @@ public class JFRDump {
         System.out.println("Dumping a " + jfrDuration.toSeconds() + " second JFR for JVM " +
                 virtualMachineDescriptor.id());
         HotSpotVirtualMachine hvm = Attach.to(virtualMachineDescriptor);
-        InputStream is = hvm.executeJCmd( "JFR.start duration=" + jfrDuration.toSeconds() + "s name=jdump filename=" + outputDirectory +
-                File.separator + "jdump-jfr-" + virtualMachineDescriptor.id() + ".jfr");
+        InputStream is = hvm.executeJCmd("JFR.start duration=" + jfrDuration.toSeconds() +
+                "s name=jdump filename=" + filenameFor(virtualMachineDescriptor));
        PrintStreamPrinter.drainUTF8(is, System.out);
+    }
+
+    private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
+        return outputDirectory + File.separator + "jdump-jfr-" + virtualMachineDescriptor.id() + ".jfr";
     }
 }
