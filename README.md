@@ -1,11 +1,11 @@
 # jdump
 
-jdump is a tool that creates multiple forms of dumps for multiple JVMs running on the local system in one go. This might
-make it easier to request detailed JVM information for debugging issues on customer sites etc. without needing to brief
-them on the details of using jcmd or similar tools.
+jdump is a tool that creates multiple forms of dumps for multiple OpenJDK HotSpot JVMs running on the local system in
+one go. This might make it easier to request detailed JVM information for debugging issues on customer sites etc.
+without needing to brief them on the details of using jcmd or similar tools.
 
-`java -jar jdump -A` for example will provide all supported types of dumps for all running JVMs that it manages to connect to using the
-Attach API.
+`java -jar jdump -A` for example will provide all supported types of dumps for all running JVMs that it manages to
+connect to using the Attach API.
 
 ## Supported dump types
 
@@ -29,6 +29,7 @@ Options:
 
 ## Development
 
-To build and run the tool for testing, run ```./gradlew run --args="<tool arguments>"``` with the desired tool arguments.
+To build and run the tool for testing, run ```./gradlew run --args="<tool arguments>"``` with the desired tool
+arguments.
 
 To build the tool into a jar file, run ```./gradlew jar```, the jar file will be generated in build/libs.

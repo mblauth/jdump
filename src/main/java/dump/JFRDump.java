@@ -1,16 +1,12 @@
 package dump;
 
-import com.sun.tools.attach.AttachNotSupportedException;
-import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
-import sun.tools.attach.HotSpotVirtualMachine;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
 
-public class JFRDump {
+public class JFRDump extends HotspotDump {
     private final String outputDirectory;
     private Duration jfrDuration = Duration.ofSeconds(5);
 
@@ -27,25 +23,16 @@ public class JFRDump {
         return this;
     }
 
-    void performForAll() {
-        System.out.println("Storing JFR dumps for all local JVM processes in " + outputDirectory);
-        for (VirtualMachineDescriptor vmd : VirtualMachine.list()) {
-            try {
-                performFor(vmd);
-            } catch (Exception e) {
-                System.err.println("Could not get JFR dump for JVM " + vmd.id() + ": " + e);
-            }
-        }
-    }
-
-    void performFor(VirtualMachineDescriptor virtualMachineDescriptor)
-            throws IOException, AttachNotSupportedException {
+    void performFor(VirtualMachineDescriptor vmd) {
         System.out.println("Dumping a " + jfrDuration.toSeconds() + " second JFR for JVM " +
-                virtualMachineDescriptor.id());
-        HotSpotVirtualMachine hvm = Attach.to(virtualMachineDescriptor);
-        InputStream is = hvm.executeJCmd("JFR.start duration=" + jfrDuration.toSeconds() +
-                "s name=jdump filename=" + filenameFor(virtualMachineDescriptor));
-       PrintStreamPrinter.drainUTF8(is, System.out);
+                vmd.id());
+        try {
+            InputStream is = executeCommand(vmd, "jcmd", "JFR.start duration=" +
+                    jfrDuration.toSeconds() + "s name=jdump filename=" + filenameFor(vmd));
+            PrintStreamPrinter.drainUTF8(is, System.out);
+        } catch (Exception e) {
+            System.err.println("Failed to dump JFR for JVM " + vmd.id() + ": " + e);
+        }
     }
 
     private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
