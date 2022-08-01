@@ -3,7 +3,6 @@ package dump;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 
 import java.io.File;
-import java.io.InputStream;
 
 class HeapDump extends HotspotDump {
     private final String outputDirectory;
@@ -23,12 +22,7 @@ class HeapDump extends HotspotDump {
      */
     void performFor(VirtualMachineDescriptor vmd) {
         System.out.println("Dumping heap for JVM " + vmd.id());
-        try {
-            InputStream is = executeCommand(vmd, "dumpheap", filenameFor(vmd));
-            PrintStreamPrinter.drainUTF8(is, System.out);
-        } catch (Exception e) {
-            System.err.println("Failed to dump heap for JVM " + vmd.id() + ": " + e);
-        }
+        execAndPrint(vmd, "dumpheap", filenameFor(vmd));
     }
 
     private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {

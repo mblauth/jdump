@@ -3,7 +3,6 @@ package dump;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 
 import java.io.File;
-import java.io.InputStream;
 import java.time.Duration;
 
 public class JFRDump extends HotspotDump {
@@ -24,15 +23,9 @@ public class JFRDump extends HotspotDump {
     }
 
     void performFor(VirtualMachineDescriptor vmd) {
-        System.out.println("Dumping a " + jfrDuration.toSeconds() + " second JFR for JVM " +
-                vmd.id());
-        try {
-            InputStream is = executeCommand(vmd, "jcmd", "JFR.start duration=" +
-                    jfrDuration.toSeconds() + "s name=jdump filename=" + filenameFor(vmd));
-            PrintStreamPrinter.drainUTF8(is, System.out);
-        } catch (Exception e) {
-            System.err.println("Failed to dump JFR for JVM " + vmd.id() + ": " + e);
-        }
+        System.out.println("Dumping a " + jfrDuration.toSeconds() + " second JFR for JVM " + vmd.id());
+        execAndPrint(vmd, "jcmd", "JFR.start duration=" +
+                jfrDuration.toSeconds() + "s name=jdump filename=" + filenameFor(vmd));
     }
 
     private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
