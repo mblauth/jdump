@@ -8,6 +8,7 @@ public class Dumps {
         if (arguments.wantHeapDumpForAll) HeapDump.in(DUMP_DIRECTORY).performForAll();
         if (arguments.wantThreadDumpForAll) ThreadDump.in(DUMP_DIRECTORY).performForAll();
         if (arguments.wantJFRForAll) JFRDump.in(DUMP_DIRECTORY).performForAll();
+        Attach.detachAll();
     }
 
 }

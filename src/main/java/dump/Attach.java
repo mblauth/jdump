@@ -23,4 +23,14 @@ class Attach {
         return hvm;
     }
 
+    static synchronized void detachAll() {
+        for (HotSpotVirtualMachine vm : attachedVMs.values()) {
+            try {
+                vm.detach();
+            } catch (IOException e) {
+                System.err.println("Failed to detach from VM " + vm.id());
+            }
+        }
+    }
+
 }
