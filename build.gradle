@@ -2,6 +2,8 @@ plugins {
     id 'java'
 }
 
+apply plugin: 'application'
+
 group 'org.jdump'
 version '1.0-SNAPSHOT'
 
@@ -12,6 +14,25 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+compileJava {
+    options.compilerArgs.addAll([
+            "--add-modules", "jdk.jcmd",
+            "--add-modules", "jdk.attach",
+            "--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED",
+            "--add-exports", "jdk.jcmd/sun.tools.common=ALL-UNNAMED"
+    ])
+}
+
+applicationDefaultJvmArgs = [
+        "--add-modules" , "jdk.jcmd",
+        "--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED",
+        "--add-exports", "jdk.jcmd/sun.tools.common=ALL-UNNAMED"
+]
+
+application {
+    mainClass = 'JDump'
 }
 
 test {
