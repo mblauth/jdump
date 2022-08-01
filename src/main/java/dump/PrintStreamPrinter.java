@@ -41,12 +41,8 @@ class PrintStreamPrinter {
     /**
      * Reads characters in UTF-8 format from the input stream and prints them
      * with the given print stream. Closes the input stream before it returns.
-     *
-     * @return The number of printed characters.
      */
-    public static long drainUTF8(InputStream is, PrintStream ps) throws IOException {
-        long result = 0;
-
+    public static void drainUTF8(InputStream is, PrintStream ps) throws IOException {
         try (BufferedInputStream bis = new BufferedInputStream(is);
              InputStreamReader isr = new InputStreamReader(bis, UTF_8)) {
             char[] c = new char[256];
@@ -56,12 +52,9 @@ class PrintStreamPrinter {
                 n = isr.read(c);
 
                 if (n > 0) {
-                    result += n;
                     ps.print(n == c.length ? c : Arrays.copyOf(c, n));
                 }
             } while (n > 0);
         }
-
-        return result;
     }
 }

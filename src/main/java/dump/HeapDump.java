@@ -44,8 +44,6 @@ class HeapDump {
         HotSpotVirtualMachine hvm = Attach.to(virtualMachineDescriptor);
         InputStream is =
                 hvm.dumpHeap(  outputDirectory + "/jdump-heap-" + virtualMachineDescriptor.id() + ".hprof");
-        if (PrintStreamPrinter.drainUTF8(is, System.out) == 0) {
-            System.out.println("done");
-        }
+        PrintStreamPrinter.drainUTF8(is, System.out);
     }
 }
