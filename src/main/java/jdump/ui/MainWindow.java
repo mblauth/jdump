@@ -22,7 +22,7 @@ public class MainWindow {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-        JLabel vmLabel = new JLabel(Info.getJVMInfo());
+        JLabel vmLabel = new JLabel("jdump " + Info.getVersion() + " running on " + Info.getJVMInfo());
         vmLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(vmLabel);
 

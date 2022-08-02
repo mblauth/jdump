@@ -10,7 +10,7 @@ public class JDump {
     }
 
     private static void showJVMInfo() {
-        System.out.println(Info.getJVMInfo());
+        System.out.println("jdump " + Info.getVersion() + " running on " + Info.getJVMInfo());
     }
 
 }
