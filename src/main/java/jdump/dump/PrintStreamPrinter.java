@@ -1,4 +1,4 @@
-package jdump.dump;/*
+/*
  * Copyright (c) 2019, 2021, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -22,6 +22,7 @@ package jdump.dump;/*
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+package jdump.dump;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
