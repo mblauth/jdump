@@ -1,5 +1,8 @@
 package jdump.dump;
 
+import jdump.ui.MainWindow;
+
+import java.awt.*;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,7 +17,8 @@ class Arguments {
 
     public Arguments(String[] args) {
         var argList = Arrays.asList(args);
-        if (args.length == 0 || argList.contains("--help")) showUsageInformation();
+        if ((args.length == 0 && GraphicsEnvironment.isHeadless())|| argList.contains("--help")) showUsageInformation();
+        if (args.length == 0 && !GraphicsEnvironment.isHeadless()) MainWindow.create();
         if (argList.contains("-A")) {
             wantHeapDumpForAll = true;
             wantThreadDumpForAll = true;

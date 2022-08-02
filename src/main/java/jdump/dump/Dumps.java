@@ -5,10 +5,22 @@ public class Dumps {
 
     public static void handle(String[] args) {
         Arguments arguments = new Arguments(args);
-        if (arguments.wantHeapDumpForAll) HeapDump.in(DUMP_DIRECTORY).performForAll();
-        if (arguments.wantThreadDumpForAll) ThreadDump.in(DUMP_DIRECTORY).performForAll();
-        if (arguments.wantJFRForAll) JFRDump.in(DUMP_DIRECTORY).with(arguments.jfrDuration).performForAll();
+        if (arguments.wantHeapDumpForAll) heapDump();
+        if (arguments.wantThreadDumpForAll) threadDump();
+        if (arguments.wantJFRForAll) jfrDump(arguments);
         Attach.detachAll();
+    }
+
+    public static void jfrDump(Arguments arguments) {
+        JFRDump.in(DUMP_DIRECTORY).with(arguments.jfrDuration).performForAll();
+    }
+
+    public static void threadDump() {
+        ThreadDump.in(DUMP_DIRECTORY).performForAll();
+    }
+
+    public static void heapDump() {
+        HeapDump.in(DUMP_DIRECTORY).performForAll();
     }
 
 }
