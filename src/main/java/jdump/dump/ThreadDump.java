@@ -1,4 +1,4 @@
-package dump;
+package jdump.dump;
 
 import com.sun.tools.attach.VirtualMachineDescriptor;
 
@@ -16,7 +16,7 @@ class ThreadDump extends HotspotDump {
     }
 
     /**
-     * Perform a thread dump for a given JVM process.
+     * Perform a thread jdump.dump for a given JVM process.
      *
      * @param vmd the {@link VirtualMachineDescriptor} of the JVM process
      */

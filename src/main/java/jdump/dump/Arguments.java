@@ -1,4 +1,4 @@
-package dump;
+package jdump.dump;
 
 import java.time.Duration;
 import java.util.Arrays;

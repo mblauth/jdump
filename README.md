@@ -7,7 +7,7 @@ without needing to brief them on the details of using jcmd or similar tools.
 `java -jar jdump -A` for example will provide all supported types of dumps for all running JVMs that it manages to
 connect to using the Attach API.
 
-## Supported dump types
+## Supported jdump.dump types
 
 Currently supported are
 

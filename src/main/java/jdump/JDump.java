@@ -1,4 +1,6 @@
-import dump.Dumps;
+package jdump;
+
+import jdump.dump.Dumps;
 
 public class JDump {
 

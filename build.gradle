@@ -18,19 +18,15 @@ dependencies {
 
 compileJava {
     options.compilerArgs.addAll([
-            "--add-modules", "jdk.jcmd",
-            "--add-modules", "jdk.attach",
-            "--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED",
-            "--add-exports", "jdk.jcmd/sun.tools.common=ALL-UNNAMED"
+            "--add-exports", "jdk.attach/sun.tools.attach=jdump"
     ])
 }
 
 application {
-    mainClass = 'JDump'
+    mainClass = 'jdump.JDump'
+    mainModule = 'jdump'
     applicationDefaultJvmArgs = [
-            "--add-modules" , "jdk.jcmd",
-            "--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED",
-            "--add-exports", "jdk.jcmd/sun.tools.common=ALL-UNNAMED"
+            "--add-exports", "jdk.attach/sun.tools.attach=jdump"
     ]
 }
 

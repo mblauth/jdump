@@ -1,4 +1,4 @@
-package dump;
+package jdump.dump;
 
 import com.sun.tools.attach.AttachNotSupportedException;
 import com.sun.tools.attach.VirtualMachine;

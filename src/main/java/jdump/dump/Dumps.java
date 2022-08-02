@@ -1,4 +1,4 @@
-package dump;
+package jdump.dump;
 
 public class Dumps {
     static String DUMP_DIRECTORY = System.getProperty("user.dir");
