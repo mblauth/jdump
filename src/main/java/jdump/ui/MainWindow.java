@@ -26,12 +26,8 @@ public class MainWindow {
         vmLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(vmLabel);
 
+
         JPanel buttons = new JPanel();
-        addButton(buttons, "Dump all", e -> {
-            Dumps.heapDump();
-            Dumps.threadDump();
-            Dumps.jfrDump(Duration.ofSeconds(5));
-        });
         addButton(buttons, "Dump heap", e -> Dumps.heapDump());
         addButton(buttons, "Dump threads", e -> Dumps.threadDump());
 
@@ -42,6 +38,12 @@ public class MainWindow {
         buttons.add(jfrInterval);
         JLabel secondLabel = new JLabel("s");
         buttons.add(secondLabel);
+
+        addButton(buttons, "Dump all", e -> {
+            Dumps.heapDump();
+            Dumps.threadDump();
+            Dumps.jfrDump(Duration.ofSeconds(Long.parseLong(jfrInterval.getText())));
+        });
 
         mainPanel.add(buttons);
         frame.getContentPane().add(mainPanel);
