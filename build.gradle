@@ -23,7 +23,7 @@ compileJava {
 }
 
 application {
-    mainClass = 'jdump.JDump'
+    mainClass.set('jdump.JDump')
     mainModule = 'jdump'
     applicationDefaultJvmArgs = [
             "--add-exports", "jdk.attach/sun.tools.attach=jdump"
@@ -33,8 +33,8 @@ application {
 jar {
     manifest {
         attributes(
-                "Main-Class": application.mainClassName,
-                "Implementation-Version": version
+                "Main-Class": application.mainClass.get(),
+                "Implementation-Version": archiveVersion
         )
     }
 }
