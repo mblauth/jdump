@@ -4,6 +4,9 @@ import com.sun.tools.attach.VirtualMachineDescriptor;
 
 import java.io.File;
 
+/**
+ * Supports dumping threads, i.e. stack traces of all running threads.
+ */
 class ThreadDump extends HotspotDump {
     private final String outputDirectory;
 
@@ -15,11 +18,6 @@ class ThreadDump extends HotspotDump {
         return new ThreadDump(outputDirectory);
     }
 
-    /**
-     * Perform a thread jdump.dump for a given JVM process.
-     *
-     * @param vmd the {@link VirtualMachineDescriptor} of the JVM process
-     */
     void performFor(VirtualMachineDescriptor vmd) {
         System.out.println("Dumping threads for JVM " + vmd.id());
         execAndSave(vmd, new File(filenameFor(vmd)), "threaddump");

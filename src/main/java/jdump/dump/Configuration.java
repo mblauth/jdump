@@ -2,6 +2,12 @@ package jdump.dump;
 
 import java.time.Duration;
 
+/**
+ * The Configuration holds all state for describing a dump setup. It is immutable and can be used in the future for
+ * storing configurations in the file system. It features a mutable version in the inner class {@link Mutable} that
+ * can be used in interactive versions of the tool. It provides makeImmutable() to transfer it into the immutable
+ * version. The core dump logic only supports the immutable version.
+ */
 public class Configuration {
     private boolean wantHeapDumpForAll = false;
     private boolean wantThreadDumpForAll = false;

@@ -5,6 +5,10 @@ import com.sun.tools.attach.VirtualMachineDescriptor;
 import java.io.File;
 import java.time.Duration;
 
+
+/**
+ * Supports dumping Java Flight Recordings.
+ */
 class JFRDump extends HotspotDump {
     public static Duration DEFAULT_JFR_DURATION = Duration.ofSeconds(5);
 
