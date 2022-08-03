@@ -13,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 /**
  * This class provides the functionality to get profiling dumps from HotSpot VM. It will not work with other JVMs.
  */
-public abstract class HotspotDump extends Dump {
+abstract class HotspotDump extends Dump {
     InputStream executeCommand(VirtualMachineDescriptor vmd, String command, Object... args)
             throws IOException, AttachNotSupportedException {
         HotSpotVirtualMachine hvm = Attach.to(vmd);

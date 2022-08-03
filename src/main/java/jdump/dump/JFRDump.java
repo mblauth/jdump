@@ -5,9 +5,11 @@ import com.sun.tools.attach.VirtualMachineDescriptor;
 import java.io.File;
 import java.time.Duration;
 
-public class JFRDump extends HotspotDump {
+class JFRDump extends HotspotDump {
+    public static Duration DEFAULT_JFR_DURATION = Duration.ofSeconds(5);
+
     private final String outputDirectory;
-    private Duration jfrDuration = Duration.ofSeconds(5);
+    private Duration jfrDuration = DEFAULT_JFR_DURATION;
 
     private JFRDump(String outputDirectory) {
         this.outputDirectory = outputDirectory;

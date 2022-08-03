@@ -6,7 +6,7 @@ public class Configuration {
     private boolean wantHeapDumpForAll = false;
     private boolean wantThreadDumpForAll = false;
     private boolean wantJFRForAll = false;
-    private Duration jfrDuration = Duration.ofSeconds(5);
+    private Duration jfrDuration = JFRDump.DEFAULT_JFR_DURATION;
 
     private Configuration() {}
 

@@ -3,7 +3,7 @@ package jdump.dump;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 
-public abstract class Dump {
+abstract class Dump {
     private final long currentPid = ProcessHandle.current().pid();
 
     abstract void performFor(VirtualMachineDescriptor vmd);
