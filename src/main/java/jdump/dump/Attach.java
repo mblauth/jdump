@@ -31,6 +31,7 @@ class Attach {
                 System.err.println("Failed to detach from VM " + vm.id());
             }
         }
+        attachedVMs.clear();
     }
 
 }
