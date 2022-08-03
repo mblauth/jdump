@@ -1,12 +1,19 @@
 package jdump;
 
-import jdump.dump.Dumps;
+import jdump.cli.CommandLineArguments;
+import jdump.ui.MainWindow;
+
+import java.awt.*;
 
 public class JDump {
 
     public static void main(String[] args) {
         showJVMInfo();
-        Dumps.handle(args);
+        if (args.length == 0 && !GraphicsEnvironment.isHeadless()) {
+            MainWindow.create();
+        } else {
+            CommandLineArguments.handle(args);
+        }
     }
 
     private static void showJVMInfo() {

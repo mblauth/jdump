@@ -1,28 +1,19 @@
 package jdump.dump;
 
-import java.time.Duration;
-
 public class Dumps {
     static String DUMP_DIRECTORY = System.getProperty("user.dir");
 
-    public static void handle(String[] args) {
-        Arguments arguments = new Arguments(args);
-        if (arguments.wantHeapDumpForAll) heapDump();
-        if (arguments.wantThreadDumpForAll) threadDump();
-        if (arguments.wantJFRForAll) jfrDump(arguments.jfrDuration);
+    public static void handle(Configuration configuration) {
+        if (configuration instanceof Configuration.Mutable)
+            throw new RuntimeException("Internal error: only accepting immutable configurations");
+        if (configuration.heapDumpForAllSet()) HeapDump.in(DUMP_DIRECTORY).performForAll();
+        if (configuration.threadDumpForAllSet()) ThreadDump.in(DUMP_DIRECTORY).performForAll();
+        if (configuration.jfrForAllSet()) JFRDump.in(DUMP_DIRECTORY).with(configuration.jfrDuration()).performForAll();
+    }
+
+    public static void detach() {
         Attach.detachAll();
     }
 
-    public static void jfrDump(Duration jfrDuration) {
-        JFRDump.in(DUMP_DIRECTORY).with(jfrDuration).performForAll();
-    }
-
-    public static void threadDump() {
-        ThreadDump.in(DUMP_DIRECTORY).performForAll();
-    }
-
-    public static void heapDump() {
-        HeapDump.in(DUMP_DIRECTORY).performForAll();
-    }
 
 }
