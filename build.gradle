@@ -39,6 +39,11 @@ jar {
     }
 }
 
+compileTestJava {
+    options.compilerArgs.addAll([ "--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED" ])
+}
+
 test {
+    jvmArgs = [ "--add-exports", "jdk.attach/sun.tools.attach=ALL-UNNAMED" ]
     useJUnitPlatform()
 }

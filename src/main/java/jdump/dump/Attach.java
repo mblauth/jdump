@@ -14,7 +14,7 @@ import java.util.Map;
  */
 class Attach {
 
-    private static final Map<String, HotSpotVirtualMachine> attachedVMs = new HashMap<>();
+    static final Map<String, HotSpotVirtualMachine> attachedVMs = new HashMap<>();
 
     /**
      * Attaches to a JVM using the Attach API. Only HotSpot VMs are supported.
