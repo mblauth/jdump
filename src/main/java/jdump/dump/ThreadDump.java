@@ -23,7 +23,7 @@ class ThreadDump extends HotspotDump {
         execAndSave(vmd, new File(filenameFor(vmd)), "threaddump");
     }
 
-    private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
+    String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
         return outputDirectory + File.separator + "jdump-threads-" + virtualMachineDescriptor.id() + ".txt";
     }
 }
