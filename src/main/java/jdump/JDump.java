@@ -8,7 +8,7 @@ import java.awt.*;
 public class JDump {
 
     public static void main(String[] args) {
-        showVersionAndJVMInfo();  // we always print the version and JVM info on the command line
+        showStartupInfos();  // we always print the version and JVM info on the command line
 
         // run the GUI when no parameters were provided and when we are not headless
         if (args.length == 0 && !GraphicsEnvironment.isHeadless()) {
@@ -18,8 +18,9 @@ public class JDump {
         }
     }
 
-    private static void showVersionAndJVMInfo() {
+    private static void showStartupInfos() {
         System.out.println("jdump " + Info.getVersion() + " running on " + Info.getJVMInfo());
+        System.out.println(Info.getLicenseInfo());
     }
 
 }

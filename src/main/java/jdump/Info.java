@@ -18,4 +18,13 @@ public class Info {
         String implementationVersion = Info.class.getPackage().getImplementationVersion();
         return Objects.requireNonNullElse(implementationVersion, "development version");
     }
+
+    /**
+     * Get some basic license information
+     * @return the license information string
+     */
+    public static String getLicenseInfo() {
+        return "This software is licensed under the GPLv2 with Classpath Exception, for more information see " +
+                "https://github.com/mblauth/jdump/blob/main/LICENSE";
+    }
 }
