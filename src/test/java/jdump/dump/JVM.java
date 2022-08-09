@@ -5,21 +5,22 @@ import com.sun.tools.attach.VirtualMachineDescriptor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.*;
 
 public class JVM implements AutoCloseable {
     private Process process;
+    private final String[] jvmArguments;
+
+    public JVM(String... jvmArguments) {
+        this.jvmArguments = jvmArguments;
+    }
 
     private CompletableFuture<Void> started;
 
     void spawn() throws IOException {
-        process = new ProcessBuilder("java",
-                "src" + File.separator +
-                "test" + File.separator +
-                "java" + File.separator +
-                "jdump" + File.separator +
-                "dump" + File.separator +
-                "BusyLoop.java").inheritIO().start();
+        process = new ProcessBuilder(command()).inheritIO().start();
         started = CompletableFuture.supplyAsync(() -> {
             while (VirtualMachine.list().stream().noneMatch(vm -> vm.id().equals(Long.toString(process.pid())))) {
                 try {
@@ -29,6 +30,19 @@ public class JVM implements AutoCloseable {
             }
             return null;
         });
+    }
+
+    private LinkedList<String> command() {
+        var cmd = new LinkedList<String>();
+        cmd.add("java");
+        cmd.addAll(List.of(jvmArguments));
+        cmd.add("src" + File.separator +
+                "test" + File.separator +
+                "java" + File.separator +
+                "jdump" + File.separator +
+                "dump" + File.separator +
+                "BusyLoop.java");
+        return cmd;
     }
 
     void waitUntilAttachable() throws ExecutionException, InterruptedException, TimeoutException {

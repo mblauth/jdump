@@ -25,7 +25,8 @@ public class ThreadDumpTest {
             var path = Paths.get(threadDump.filenameFor(vmd));
             assertTrue(Files.exists(path));
             try(var lines = Files.lines(path)) {
-                assertTrue(lines.anyMatch(line -> line.contains("busyLoop")));
+                assertTrue(lines.anyMatch(line -> line.contains("busyLoop")),
+                        "A line in output file contains \"busyloop\"");
             }
             Files.delete(path);
         }
