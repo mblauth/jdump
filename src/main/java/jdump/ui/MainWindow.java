@@ -47,10 +47,16 @@ public class MainWindow {
         JLabel secondLabel = new JLabel("s");
         buttons.add(secondLabel);
 
+        addButton(buttons, "Dump NMT", e -> {
+            arguments.wantNmtForAll();
+            dump();
+        });
+
         addButton(buttons, "Dump all", e -> {
             arguments.wantHeapDumpForAll();
             arguments.wantThreadDumpForAll();
             arguments.wantJfrForAll();
+            arguments.wantNmtForAll();
             dump();
         });
 
