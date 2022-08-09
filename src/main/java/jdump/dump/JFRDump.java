@@ -13,19 +13,11 @@ class JFRDump extends HotspotDump {
     public static Duration DEFAULT_JFR_DURATION = Duration.ofSeconds(5);
 
     private final String outputDirectory;
-    private Duration jfrDuration = DEFAULT_JFR_DURATION;
+    private final Duration jfrDuration;
 
-    private JFRDump(String outputDirectory) {
-        this.outputDirectory = outputDirectory;
-    }
-
-    static JFRDump in(String outputDirectory) {
-        return new JFRDump(outputDirectory);
-    }
-
-    JFRDump with(Duration jfrDuration) {
-        this.jfrDuration = jfrDuration;
-        return this;
+    JFRDump(Configuration configuration) {
+        this.outputDirectory = configuration.outputDirectory();
+        this.jfrDuration = configuration.jfrDuration();
     }
 
     void performFor(VirtualMachineDescriptor vmd) {

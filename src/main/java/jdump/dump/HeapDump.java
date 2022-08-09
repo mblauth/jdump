@@ -10,12 +10,8 @@ import java.io.File;
 class HeapDump extends HotspotDump {
     private final String outputDirectory;
 
-    private HeapDump(String outputDirectory) {
-        this.outputDirectory = outputDirectory;
-    }
-
-    static HeapDump in(String outputDirectory) {
-        return new HeapDump(outputDirectory);
+    HeapDump(Configuration configuration) {
+        this.outputDirectory = configuration.outputDirectory();
     }
 
     void performFor(VirtualMachineDescriptor vmd) {

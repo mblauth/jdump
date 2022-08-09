@@ -10,12 +10,8 @@ import java.io.File;
 class ThreadDump extends HotspotDump {
     private final String outputDirectory;
 
-    private ThreadDump(String outputDirectory) {
-        this.outputDirectory = outputDirectory;
-    }
-
-    static ThreadDump in(String outputDirectory) {
-        return new ThreadDump(outputDirectory);
+    ThreadDump(Configuration configuration) {
+        this.outputDirectory = configuration.outputDirectory();
     }
 
     void performFor(VirtualMachineDescriptor vmd) {

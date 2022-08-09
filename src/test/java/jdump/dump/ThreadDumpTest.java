@@ -19,7 +19,7 @@ public class ThreadDumpTest {
             jvm.spawn();
             // TODO: race condition, we should emit a message when child proc is running user code
             Thread.sleep(1_000);
-            var threadDump = ThreadDump.in(System.getProperty("user.dir"));
+            var threadDump = new ThreadDump(Configuration.defaultConfiguration());
             var vmd = jvm.descriptor();
             threadDump.performFor(vmd);
             var path = Paths.get(threadDump.filenameFor(vmd));

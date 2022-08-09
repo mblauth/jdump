@@ -13,12 +13,8 @@ import java.nio.file.Paths;
 public class NMTDump extends HotspotDump {
     private final String outputDirectory;
 
-    private NMTDump(String outputDirectory) {
-        this.outputDirectory = outputDirectory;
-    }
-
-    static NMTDump in(String outputDirectory) {
-        return new NMTDump(outputDirectory);
+    NMTDump(Configuration configuration) {
+        this.outputDirectory = configuration.outputDirectory();
     }
 
     @Override

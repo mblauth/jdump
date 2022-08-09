@@ -14,6 +14,7 @@ public class Configuration {
     private boolean wantJFRForAll = false;
     private Duration jfrDuration = JFRDump.DEFAULT_JFR_DURATION;
     private boolean wantNmtForAll = false;
+    private String outputDirectory = System.getProperty("user.dir");
 
     private Configuration() {}
 
@@ -23,6 +24,7 @@ public class Configuration {
         this.wantJFRForAll = configuration.wantJFRForAll;
         this.jfrDuration = configuration.jfrDuration;
         this.wantNmtForAll = configuration.wantNmtForAll;
+        this.outputDirectory = configuration.outputDirectory;
     }
 
     public static class Mutable extends Configuration {
@@ -96,8 +98,16 @@ public class Configuration {
         return wantNmtForAll;
     }
 
+    public String outputDirectory() {
+        return outputDirectory;
+    }
+
     public Duration jfrDuration() {
         return jfrDuration;
+    }
+
+    static Configuration defaultConfiguration() {
+        return new Configuration();
     }
 
 }

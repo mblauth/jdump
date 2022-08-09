@@ -18,7 +18,7 @@ public class NMTDumpTest {
     public void testCanCreateNMTDump() throws IOException, ExecutionException, InterruptedException, TimeoutException {
         try(JVM jvm = new JVM("-XX:NativeMemoryTracking=summary")) {
             jvm.spawn();
-            var dump = NMTDump.in(System.getProperty("user.dir"));
+            var dump = new NMTDump(Configuration.defaultConfiguration());
             var vmd = jvm.descriptor();
             dump.performFor(vmd);
             var path = Paths.get(dump.filenameFor(vmd));
@@ -36,7 +36,7 @@ public class NMTDumpTest {
             IOException, ExecutionException, InterruptedException, TimeoutException {
         try(JVM jvm = new JVM()) {
             jvm.spawn();
-            var dump = NMTDump.in(System.getProperty("user.dir"));
+            var dump = new NMTDump(Configuration.defaultConfiguration());
             dump.performFor(jvm.descriptor());
             assertFalse(Files.exists(Path.of(dump.filenameFor(jvm.descriptor()))), "Output file created");
         }
