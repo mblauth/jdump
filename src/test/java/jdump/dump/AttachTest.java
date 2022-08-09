@@ -20,7 +20,7 @@ public class AttachTest {
 
             Attach.to(jvm.descriptor());
 
-            assertEquals(1, Attach.attachedVMs.size());
+            assertEquals(1, Attach.attachedVMs.size(), "only one attached VM");
             assertTrue(Attach.attachedVMs.containsKey(Long.toString(jvm.pid())));
 
             Attach.detachAll();

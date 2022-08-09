@@ -25,12 +25,14 @@ public class NMTDump extends HotspotDump {
     void performFor(VirtualMachineDescriptor vmd) {
         System.out.println("Dump NMT for JVM " + vmd.id());
         execAndSave(vmd, new File(filenameFor(vmd)), "jcmd","VM.native_memory");
-        try(var lines = Files.lines(Paths.get(filenameFor(vmd)))) {
+        var path = Paths.get(filenameFor(vmd));
+        try(var lines = Files.lines(path)) {
             if (lines.anyMatch(line -> line.contains("Native memory tracking is not enabled"))) {
-                throw new RuntimeException("Native memory tracking is not enabled for JVM " + vmd.id());
+                System.err.println("Native memory tracking is not enabled for JVM " + vmd.id());
+                Files.delete(path);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failure generating NMT dump");
+            System.err.println("Failure generating NMT dump:" + e.getMessage());
         }
     }
 

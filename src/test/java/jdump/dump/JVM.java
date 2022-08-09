@@ -7,7 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class JVM implements AutoCloseable {
     private Process process;
@@ -69,5 +72,6 @@ public class JVM implements AutoCloseable {
     @Override
     public void close() {
         process.destroy();
+        Attach.detachAll();
     }
 }

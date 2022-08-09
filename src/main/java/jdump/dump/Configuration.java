@@ -13,6 +13,7 @@ public class Configuration {
     private boolean wantThreadDumpForAll = false;
     private boolean wantJFRForAll = false;
     private Duration jfrDuration = JFRDump.DEFAULT_JFR_DURATION;
+    private boolean wantNmtForAll = false;
 
     private Configuration() {}
 
@@ -21,6 +22,7 @@ public class Configuration {
         this.wantThreadDumpForAll = configuration.wantThreadDumpForAll;
         this.wantJFRForAll = configuration.wantJFRForAll;
         this.jfrDuration = configuration.jfrDuration;
+        this.wantNmtForAll = configuration.wantNmtForAll;
     }
 
     public static class Mutable extends Configuration {
@@ -46,11 +48,20 @@ public class Configuration {
             super.wantJfrForAll();
         }
 
+        public void wantNmtForAll() {
+            super.wantNmtForAll();
+        }
+
         public void wantAllDumps() {
             super.wantHeapDumpForAll();
             super.wantThreadDumpForAll();
             super.wantJfrForAll();
+            super.wantNmtForAll();
         }
+    }
+
+    private void wantNmtForAll() {
+        this.wantNmtForAll = true;
     }
 
     private void wantHeapDumpForAll() {
@@ -79,6 +90,10 @@ public class Configuration {
 
     public boolean jfrForAllSet() {
         return wantJFRForAll;
+    }
+
+    public boolean nmtForAllSet() {
+        return wantNmtForAll;
     }
 
     public Duration jfrDuration() {

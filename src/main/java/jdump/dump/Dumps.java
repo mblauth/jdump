@@ -16,6 +16,7 @@ public class Dumps {
         if (configuration.heapDumpForAllSet()) HeapDump.in(DUMP_DIRECTORY).performForAll();
         if (configuration.threadDumpForAllSet()) ThreadDump.in(DUMP_DIRECTORY).performForAll();
         if (configuration.jfrForAllSet()) JFRDump.in(DUMP_DIRECTORY).with(configuration.jfrDuration()).performForAll();
+        if (configuration.nmtForAllSet()) NMTDump.in(DUMP_DIRECTORY).performForAll();
     }
 
     /**
