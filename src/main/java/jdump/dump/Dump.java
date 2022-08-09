@@ -24,4 +24,11 @@ abstract class Dump {
                 .filter(vmd -> currentPid != Long.parseLong(vmd.id())) // we don't want to work with our own VM
                 .forEach(this::performFor);
     }
+
+    /**
+     * Get the file name for the dump file for the given JVM.
+     * @param vmd the {@link VirtualMachineDescriptor} describing the given JVM.
+     * @return the file name
+     */
+    abstract String filenameFor(VirtualMachineDescriptor vmd);
 }

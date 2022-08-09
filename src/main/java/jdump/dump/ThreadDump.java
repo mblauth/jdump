@@ -14,11 +14,13 @@ class ThreadDump extends HotspotDump {
         this.outputDirectory = configuration.outputDirectory();
     }
 
+    @Override
     void performFor(VirtualMachineDescriptor vmd) {
         System.out.println("Dumping threads for JVM " + vmd.id());
         execAndSave(vmd, new File(filenameFor(vmd)), "threaddump");
     }
 
+    @Override
     String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
         return outputDirectory + File.separator + "jdump-threads-" + virtualMachineDescriptor.id() + ".txt";
     }

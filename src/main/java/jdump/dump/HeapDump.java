@@ -14,12 +14,14 @@ class HeapDump extends HotspotDump {
         this.outputDirectory = configuration.outputDirectory();
     }
 
+    @Override
     void performFor(VirtualMachineDescriptor vmd) {
         System.out.println("Dumping heap for JVM " + vmd.id());
         execAndPrint(vmd, "dumpheap", filenameFor(vmd));
     }
 
-    private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
+    @Override
+    String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
         return outputDirectory + File.separator + "jdump-heap-" + virtualMachineDescriptor.id() + ".hprof";
     }
 }

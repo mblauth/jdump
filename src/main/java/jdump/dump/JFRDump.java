@@ -20,13 +20,15 @@ class JFRDump extends HotspotDump {
         this.jfrDuration = configuration.jfrDuration();
     }
 
+    @Override
     void performFor(VirtualMachineDescriptor vmd) {
         System.out.println("Dumping a " + jfrDuration.toSeconds() + " second JFR for JVM " + vmd.id());
         execAndPrint(vmd, "jcmd", "JFR.start duration=" +
                 jfrDuration.toSeconds() + "s name=jdump filename=" + filenameFor(vmd));
     }
 
-    private String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
+    @Override
+    String filenameFor(VirtualMachineDescriptor virtualMachineDescriptor) {
         return outputDirectory + File.separator + "jdump-jfr-" + virtualMachineDescriptor.id() + ".jfr";
     }
 }

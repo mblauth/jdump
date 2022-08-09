@@ -32,6 +32,7 @@ public class NMTDump extends HotspotDump {
         }
     }
 
+    @Override
     String filenameFor(VirtualMachineDescriptor vmd) {
         return outputDirectory + File.separator + "jdump-nmt-" + vmd.id() + ".txt";
     }
