@@ -22,9 +22,12 @@ public class ThreadDumpTest {
             var threadDump = ThreadDump.in(System.getProperty("user.dir"));
             var vmd = jvm.descriptor();
             threadDump.performFor(vmd);
-            try(var lines = Files.lines(Paths.get(threadDump.filenameFor(vmd)))) {
+            var path = Paths.get(threadDump.filenameFor(vmd));
+            assertTrue(Files.exists(path));
+            try(var lines = Files.lines(path)) {
                 assertTrue(lines.anyMatch(line -> line.contains("busyLoop")));
             }
+            Files.delete(path);
         }
     }
 
