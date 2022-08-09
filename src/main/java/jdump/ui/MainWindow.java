@@ -10,7 +10,7 @@ import java.awt.event.*;
 
 public class MainWindow {
 
-    final Configuration.Mutable arguments = new Configuration.Mutable();
+    Configuration.Mutable arguments = new Configuration.Mutable();
 
     public static void create() {
         SwingUtilities.invokeLater(() -> new MainWindow().renderMainWindow());
@@ -95,6 +95,7 @@ public class MainWindow {
 
     private void dump() {
         Dumps.handle(arguments.makeImmutable());
+        arguments = new Configuration.Mutable();
     }
 
     private void addButton(JPanel buttons, String label, ActionListener listener) {
