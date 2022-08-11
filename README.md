@@ -17,7 +17,7 @@ Currently supported are
 
 ## Usage
 ```
-java -jar jdump.jar [-f<folder name>] [-A] [-H] [-J] [-d<duration in seconds>] [-N] [-T]
+java -jar jdump.jar [-f<folder name>] [-A] [-H] [-J] [-d<duration in seconds>] [-M] [-N] [-T]
 
 Options:
 start without options to show UI, if not on a headless system
@@ -25,6 +25,7 @@ start without options to show UI, if not on a headless system
 -A: produce all types of dumps for all JVMs running locally
 -H: produce heap dumps for all JVMs running locally
 -J: produce JFRs for all JVMs running locally
+-M: produce mallinfo() stats on Linux with glibc
 -d<duration in seconds>: the duration selected for the JFRs, in seconds, default: 5
 -N: product Native Memory Tracks for all JVMs running locally
 -T: produce thread dumps for all JVMs running locally
