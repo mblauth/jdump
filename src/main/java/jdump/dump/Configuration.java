@@ -1,5 +1,7 @@
 package jdump.dump;
 
+import jdump.output.Output;
+
 import java.time.Duration;
 
 /**
@@ -15,6 +17,7 @@ public class Configuration {
     private Duration jfrDuration = JFRDump.DEFAULT_JFR_DURATION;
     private boolean wantNmtForAll = false;
     private String outputDirectory = System.getProperty("user.dir");
+    private Output.TYPE outputType = Output.TYPE.FILE;
 
     private Configuration() {}
 
@@ -25,6 +28,8 @@ public class Configuration {
         this.jfrDuration = configuration.jfrDuration;
         this.wantNmtForAll = configuration.wantNmtForAll;
         this.outputDirectory = configuration.outputDirectory;
+        this.outputType = configuration.outputType ==
+                Output.TYPE.DIRECTORY || moreThanOneDump() ? Output.TYPE.DIRECTORY : Output.TYPE.FILE;
     }
 
     public static class Mutable extends Configuration {
@@ -60,6 +65,24 @@ public class Configuration {
             super.wantJfrForAll();
             super.wantNmtForAll();
         }
+
+        public Mutable outputDirectory(String directoryName) {
+            super.outputDirectory(directoryName);
+            return this;
+        }
+
+        public Mutable outputType(Output.TYPE outputType) {
+            super.outputType(outputType);
+            return this;
+        }
+    }
+
+    private void outputType(Output.TYPE outputType) {
+        this.outputType = outputType;
+    }
+
+    private void outputDirectory(String directoryName) {
+        this.outputDirectory = directoryName;
     }
 
     private void wantNmtForAll() {
@@ -106,8 +129,20 @@ public class Configuration {
         return jfrDuration;
     }
 
+    public Output.TYPE outputType() {
+        return outputType;
+    }
+
     static Configuration defaultConfiguration() {
         return new Configuration();
     }
 
+    private boolean moreThanOneDump() {
+        int numberOfDumpTypes = 0;
+        if (wantHeapDumpForAll) numberOfDumpTypes++;
+        if (wantThreadDumpForAll) numberOfDumpTypes++;
+        if (wantJFRForAll) numberOfDumpTypes++;
+        if (wantNmtForAll) numberOfDumpTypes++;
+        return numberOfDumpTypes > 1;
+    }
 }

@@ -1,39 +1,31 @@
 package jdump.dump;
 
 import com.sun.tools.attach.VirtualMachineDescriptor;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import jdump.output.Output;
 
 /**
  * Supports dumping native memory tracks.
  */
 public class NMTDump extends HotspotDump {
-    private final String outputDirectory;
+    private final Configuration configuration;
 
     NMTDump(Configuration configuration) {
-        this.outputDirectory = configuration.outputDirectory();
+        this.configuration = configuration;
     }
 
     @Override
     void performFor(VirtualMachineDescriptor vmd) {
         System.out.println("Dump NMT for JVM " + vmd.id());
-        execAndSave(vmd, new File(filenameFor(vmd)), "jcmd","VM.native_memory");
-        var path = Paths.get(filenameFor(vmd));
-        try(var lines = Files.lines(path)) {
-            if (lines.anyMatch(line -> line.contains("Native memory tracking is not enabled"))) {
-                System.err.println("Native memory tracking is not enabled for JVM " + vmd.id());
-                Files.delete(path);
-            }
-        } catch (IOException e) {
-            System.err.println("Failure generating NMT dump:" + e.getMessage());
+        var output = Output.using(configuration);
+        execAndSave(vmd, output.file(filenameFor(vmd)), "jcmd","VM.native_memory");
+        if (output.aLineMatches("Native memory tracking is not enabled")) {
+            System.err.println("Native memory tracking is not enabled for JVM " + vmd.id());
+            output.deleteFile();
         }
     }
 
     @Override
     String filenameFor(VirtualMachineDescriptor vmd) {
-        return outputDirectory + File.separator + "jdump-nmt-" + vmd.id() + ".txt";
+        return "jdump-nmt-" + vmd.id() + ".txt";
     }
 }
