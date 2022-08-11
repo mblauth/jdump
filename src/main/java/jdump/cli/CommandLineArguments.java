@@ -57,7 +57,7 @@ public class CommandLineArguments {
     }
 
     private void showUsageInformation() {
-        System.out.println("Usage: jdump [-A] [-H] [-J] [-d<duration in seconds>] [-N] [-T]");
+        System.out.println("Usage: jdump [-f<folder name>] [-A] [-H] [-J] [-d<duration in seconds>] [-N] [-T]");
         System.out.println();
         System.out.println("Options:");
         System.out.println("start without options to show UI, if not on a headless system");

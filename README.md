@@ -17,7 +17,7 @@ Currently supported are
 
 ## Usage
 ```
-java -jar jdump.jar  [-A] [-H] [-J] [-d<duration in seconds>] [-N] [-T]
+java -jar jdump.jar [-f<folder name>] [-A] [-H] [-J] [-d<duration in seconds>] [-N] [-T]
 
 Options:
 start without options to show UI, if not on a headless system
