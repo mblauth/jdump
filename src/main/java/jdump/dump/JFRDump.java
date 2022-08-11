@@ -16,6 +16,7 @@ class JFRDump extends HotspotDump {
     private final Duration jfrDuration;
 
     JFRDump(Configuration configuration) {
+        if (!configuration.isImmutable()) throw new IllegalArgumentException("Mutable configuration passed");
         this.outputDirectory = configuration.outputDirectory();
         this.jfrDuration = configuration.jfrDuration();
     }

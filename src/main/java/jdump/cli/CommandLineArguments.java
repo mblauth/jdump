@@ -38,12 +38,22 @@ public class CommandLineArguments {
             if (argList.contains("-N")) configuration.wantNmtForAll();
         }
         setDuration(argList);
+        setOutputDirectory(argList);
+    }
+
+    private void setOutputDirectory(List<String> argList) {
+        Optional<String> lastOutputDirectory = getLastOf(argList, "-f");
+        lastOutputDirectory.ifPresent(s -> configuration.outputDirectory(s.substring(2)));
     }
 
     private void setDuration(List<String> argList) {
-        Collections.reverse(argList);
-        Optional<String> lastDuration = argList.stream().filter(s -> s.startsWith("-d")).findFirst();
+        Optional<String> lastDuration = getLastOf(argList, "-d");
         lastDuration.ifPresent(s -> configuration.jfrDuration(Long.parseLong(s.substring(2))));
+    }
+
+    private static Optional<String> getLastOf(List<String> argList, String parameterPrefix) {
+        Collections.reverse(argList);
+        return argList.stream().filter(s -> s.startsWith(parameterPrefix)).findFirst();
     }
 
     private void showUsageInformation() {
@@ -51,6 +61,7 @@ public class CommandLineArguments {
         System.out.println();
         System.out.println("Options:");
         System.out.println("start without options to show UI, if not on a headless system");
+        System.out.println("-f<name>: name of the target folder (will be created if non-existent; current working directoy, if empty)");
         System.out.println("-A: produce all types of dumps for all JVMs running locally");
         System.out.println("-H: produce heap dumps for all JVMs running locally");
         System.out.println("-J: produce JFRs for all JVMs running locally");

@@ -11,6 +11,7 @@ class HeapDump extends HotspotDump {
     private final String outputDirectory;
 
     HeapDump(Configuration configuration) {
+        if (!configuration.isImmutable()) throw new IllegalArgumentException("Mutable configuration passed");
         this.outputDirectory = configuration.outputDirectory();
     }
 

@@ -10,6 +10,7 @@ class ThreadDump extends HotspotDump {
     private final Configuration configuration;
 
     ThreadDump(Configuration configuration) {
+        if (!configuration.isImmutable()) throw new IllegalArgumentException("Mutable configuration passed");
         this.configuration = configuration;
     }
 

@@ -1,6 +1,5 @@
 package jdump.dump;
 
-import jdump.output.Output;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -16,26 +15,35 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DirectoryOutputTest {
 
+    /* Tests that with more than one dump selected, the output is by default moved into a directory. */
     @Test
-    public void testDirectoryOutput() throws ExecutionException, InterruptedException, TimeoutException, IOException {
+    public void testAutomaticDirectoryOutput() throws ExecutionException, InterruptedException, TimeoutException, IOException {
         try (JVM jvm = new JVM("-XX:NativeMemoryTracking=summary")) {
             var directoryName = System.getProperty("user.dir") + File.separator + "foo";
             jvm.spawn();
-            var dump = new NMTDump(new Configuration.Mutable()
+            Configuration configuration = new Configuration.Mutable()
+                    .wantNmtForAll()
+                    .wantJfrForAll()
+                    .jfrDuration(1)
                     .outputDirectory(directoryName)
-                    .outputType(Output.TYPE.DIRECTORY)
-                    .makeImmutable());
-            dump.performFor(jvm.descriptor());
+                    .makeImmutable();
+            var nmtDump = new NMTDump(configuration);
+            nmtDump.performFor(jvm.descriptor());
+            var jfrDump = new JFRDump(configuration);
+            jfrDump.performFor(jvm.descriptor());
+            Thread.sleep(1_500); // wait for JVM to dump jfr
             var path = Path.of(directoryName);
-            assertTrue(Files.exists(path), "Folder " + directoryName + "was created");
+            assertTrue(Files.exists(path), "Folder " + directoryName + " was created");
             int filesDeleted = 0;
             for (File file : Objects.requireNonNull(path.toFile().listFiles())) {
                 Files.delete(file.toPath());
                 filesDeleted++;
             }
-            assertEquals(1, filesDeleted, "One file was created");
+            assertEquals(2, filesDeleted, "Two files were created");
             Files.delete(path);
         }
     }
+
+
 }
 

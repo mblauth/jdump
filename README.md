@@ -21,6 +21,7 @@ java -jar jdump.jar  [-A] [-H] [-J] [-d<duration in seconds>] [-N] [-T]
 
 Options:
 start without options to show UI, if not on a headless system
+-f<name>: name of the target folder (will be created if non-existent; current working directoy, if empty)
 -A: produce all types of dumps for all JVMs running locally
 -H: produce heap dumps for all JVMs running locally
 -J: produce JFRs for all JVMs running locally

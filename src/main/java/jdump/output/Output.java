@@ -12,8 +12,6 @@ public interface Output {
 
     static Output using(Configuration configuration) {
         switch (configuration.outputType()) {
-            case FILE:
-                return new FileOutput(configuration.outputDirectory());
             case DIRECTORY:
                 return new DirectoryOutput(configuration.outputDirectory());
             default: throw new RuntimeException("Internal error: could not handle output type");
@@ -21,6 +19,6 @@ public interface Output {
     }
 
     enum TYPE {
-        FILE, DIRECTORY
+        DIRECTORY
     }
 }

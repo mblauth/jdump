@@ -5,16 +5,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class DirectoryOutput implements Output {
+class DirectoryOutput implements Output {
     private final File directory;
     private File currentFile;
 
     DirectoryOutput(String dirname) {
         directory = new File(dirname);
-        if (!directory.mkdirs()) {
+        if (!directory.exists() && !directory.mkdirs()) {
             throw new RuntimeException("Could not create directory " + dirname);
         }
-        System.out.println("created directory " + directory);
     }
 
     @Override

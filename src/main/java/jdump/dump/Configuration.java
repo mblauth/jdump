@@ -17,9 +17,12 @@ public class Configuration {
     private Duration jfrDuration = JFRDump.DEFAULT_JFR_DURATION;
     private boolean wantNmtForAll = false;
     private String outputDirectory = System.getProperty("user.dir");
-    private Output.TYPE outputType = Output.TYPE.FILE;
+    private Output.TYPE outputType = Output.TYPE.DIRECTORY;
+    private boolean immutable;
 
-    private Configuration() {}
+    private Configuration() {
+        immutable = true;
+    }
 
     private Configuration(Configuration configuration) {
         this.wantHeapDumpForAll = configuration.wantHeapDumpForAll;
@@ -28,19 +31,22 @@ public class Configuration {
         this.jfrDuration = configuration.jfrDuration;
         this.wantNmtForAll = configuration.wantNmtForAll;
         this.outputDirectory = configuration.outputDirectory;
-        this.outputType = configuration.outputType ==
-                Output.TYPE.DIRECTORY || moreThanOneDump() ? Output.TYPE.DIRECTORY : Output.TYPE.FILE;
+        this.outputType = Output.TYPE.DIRECTORY;
+        immutable = true;
     }
 
     public static class Mutable extends Configuration {
-        public Mutable() {}
+        public Mutable() {
+            super.immutable = false;
+        }
 
         public Configuration makeImmutable() {
             return new Configuration(this);
         }
 
-        public void jfrDuration(long durationInSeconds) {
+        public Mutable jfrDuration(long durationInSeconds) {
             super.jfrDuration(Duration.ofSeconds(durationInSeconds));
+            return this;
         }
 
         public void wantHeapDumpForAll() {
@@ -51,12 +57,14 @@ public class Configuration {
             super.wantThreadDumpForAll();
         }
 
-        public void wantJfrForAll() {
+        public Mutable wantJfrForAll() {
             super.wantJfrForAll();
+            return this;
         }
 
-        public void wantNmtForAll() {
+        public Mutable wantNmtForAll() {
             super.wantNmtForAll();
+            return this;
         }
 
         public void wantAllDumps() {
@@ -137,12 +145,7 @@ public class Configuration {
         return new Configuration();
     }
 
-    private boolean moreThanOneDump() {
-        int numberOfDumpTypes = 0;
-        if (wantHeapDumpForAll) numberOfDumpTypes++;
-        if (wantThreadDumpForAll) numberOfDumpTypes++;
-        if (wantJFRForAll) numberOfDumpTypes++;
-        if (wantNmtForAll) numberOfDumpTypes++;
-        return numberOfDumpTypes > 1;
+    public boolean isImmutable() {
+        return immutable;
     }
 }

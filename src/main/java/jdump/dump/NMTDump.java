@@ -10,6 +10,7 @@ public class NMTDump extends HotspotDump {
     private final Configuration configuration;
 
     NMTDump(Configuration configuration) {
+        if (!configuration.isImmutable()) throw new IllegalArgumentException("Mutable configuration passed");
         this.configuration = configuration;
     }
 
