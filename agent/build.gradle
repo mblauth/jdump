@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'org.jdump'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+jar {
+    manifest {
+        attributes(
+                "Agent-Class": "jdump.agent.Agent",
+                "Implementation-Version": archiveVersion
+        )
+    }
+}

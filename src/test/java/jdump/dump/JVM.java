@@ -22,7 +22,7 @@ public class JVM implements AutoCloseable {
 
     private CompletableFuture<Void> started;
 
-    void spawn() throws IOException {
+    public void spawn() throws IOException {
         process = new ProcessBuilder(command()).inheritIO().start();
         started = CompletableFuture.supplyAsync(() -> {
             while (VirtualMachine.list().stream().noneMatch(vm -> vm.id().equals(Long.toString(process.pid())))) {
@@ -52,7 +52,7 @@ public class JVM implements AutoCloseable {
         started.get(5, TimeUnit.SECONDS);
     }
 
-    VirtualMachineDescriptor descriptor()
+    public VirtualMachineDescriptor descriptor()
             throws ExecutionException, InterruptedException, TimeoutException {
         waitUntilAttachable();
         var optVmd = VirtualMachine.list().stream().filter(vm -> vm.id().equals(pidString())).findFirst();
