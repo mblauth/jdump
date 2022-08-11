@@ -1,4 +1,5 @@
 plugins {
+    id "org.beryx.jlink" version "2.24.1"
     id 'java'
 }
 
@@ -13,8 +14,8 @@ repositories {
 
 
 compileJava {
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
@@ -42,6 +43,15 @@ jar {
                 "Main-Class": application.mainClass.get(),
                 "Implementation-Version": archiveVersion
         )
+    }
+}
+
+jlink {
+    mergedModule {
+        requires 'jdk.attach'
+    }
+    launcher {
+        name = 'jdump'
     }
 }
 

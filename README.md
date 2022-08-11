@@ -36,3 +36,6 @@ To build and run the tool for testing, run ```./gradlew run --args="<tool argume
 arguments.
 
 To build the tool into a jar file, run ```./gradlew jar```, the jar file will be generated in build/libs.
+
+To build and run the tool into a standalone custom JVM, run ```./gradlew jlink```, the image will be generated in
+image/. Copy it to your target system and execute image/bin/jdump to run the application.
