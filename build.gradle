@@ -47,9 +47,6 @@ jar {
 }
 
 jlink {
-    mergedModule {
-        requires 'jdk.attach'
-    }
     launcher {
         name = 'jdump'
     }
