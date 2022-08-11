@@ -1,5 +1,8 @@
+import org.gradle.internal.jvm.Jvm
+
 plugins {
     id 'java'
+    id 'c'
 }
 
 group 'org.jdump'
@@ -15,6 +18,10 @@ compileJava {
 }
 
 jar {
+    from('build/libs/agent/shared/') {
+        include '**.so'
+    }
+
     manifest {
         attributes(
                 "Agent-Class": "jdump.agent.Agent",
@@ -22,3 +29,34 @@ jar {
         )
     }
 }
+
+model {
+    platforms {
+        x64 {
+            architecture "x86_64"
+        }
+    }
+    components {
+        agent(NativeLibrarySpec) {
+            targetPlatform "x64"
+            binaries.all {
+                def jvmHome = Jvm.current().javaHome
+                if (targetPlatform.operatingSystem.linux) {
+                    cCompiler.args '-I', "${jvmHome}/include"
+                    cCompiler.args '-I', "${jvmHome}/include/linux"
+                    cCompiler.args '-D_FILE_OFFSET_BITS=64'
+                }
+            }
+            sources {
+                c {
+                    source {
+                        srcDir "src/main/c"
+                        include "**/*.c"
+                    }
+                }
+            }
+        }
+    }
+}
+
+jar.dependsOn 'agentSharedLibrary'

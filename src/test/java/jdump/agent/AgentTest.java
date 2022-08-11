@@ -18,7 +18,7 @@ public class AgentTest {
         try (JVM jvm = new JVM()) {
             jvm.spawn();
             var vm = VirtualMachine.attach(jvm.descriptor());
-            vm.loadAgent("agent/build/libs/agent-1.0-SNAPSHOT.jar");
+            vm.loadAgent("agent/build/libs/agent-1.0-SNAPSHOT.jar", "foobar");
         }
     }
 }
