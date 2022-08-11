@@ -19,6 +19,7 @@ public class Configuration {
     private String outputDirectory = System.getProperty("user.dir");
     private Output.TYPE outputType = Output.TYPE.DIRECTORY;
     private boolean immutable;
+    private boolean wantMallInfoForAll = false;
 
     private Configuration() {
         immutable = true;
@@ -32,6 +33,7 @@ public class Configuration {
         this.wantNmtForAll = configuration.wantNmtForAll;
         this.outputDirectory = configuration.outputDirectory;
         this.outputType = Output.TYPE.DIRECTORY;
+        this.wantMallInfoForAll = configuration.wantMallInfoForAll;
         immutable = true;
     }
 
@@ -83,6 +85,14 @@ public class Configuration {
             super.outputType(outputType);
             return this;
         }
+
+        public void wantMallInfoForAll() {
+            super.wantMallInfoForAll();
+        }
+    }
+
+    private void wantMallInfoForAll() {
+        this.wantMallInfoForAll = true;
     }
 
     private void outputType(Output.TYPE outputType) {
@@ -127,6 +137,10 @@ public class Configuration {
 
     public boolean nmtForAllSet() {
         return wantNmtForAll;
+    }
+
+    public boolean mallInfoForAllSet() {
+        return wantMallInfoForAll;
     }
 
     public String outputDirectory() {

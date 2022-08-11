@@ -39,6 +39,9 @@ application {
 }
 
 jar {
+    from('agent/build/libs/') {
+        include '**.jar'
+    }
     manifest {
         attributes(
                 "Main-Class": application.mainClass.get(),

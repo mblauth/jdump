@@ -36,6 +36,7 @@ public class CommandLineArguments {
             if (argList.contains("-T")) configuration.wantThreadDumpForAll();
             if (argList.contains("-J")) configuration.wantJfrForAll();
             if (argList.contains("-N")) configuration.wantNmtForAll();
+            if (argList.contains("-M")) configuration.wantMallInfoForAll();
         }
         setDuration(argList);
         setOutputDirectory(argList);
@@ -57,15 +58,16 @@ public class CommandLineArguments {
     }
 
     private void showUsageInformation() {
-        System.out.println("Usage: jdump [-f<folder name>] [-A] [-H] [-J] [-d<duration in seconds>] [-N] [-T]");
+        System.out.println("Usage: jdump [-f<folder name>] [-A] [-H] [-J] [-d<duration in seconds>] [-N] [-M] [-T]");
         System.out.println();
         System.out.println("Options:");
         System.out.println("start without options to show UI, if not on a headless system");
         System.out.println("-f<name>: name of the target folder (will be created if non-existent; current working directoy, if empty)");
-        System.out.println("-A: produce all types of dumps for all JVMs running locally");
+        System.out.println("-A: produce all non-agent-based types of dumps for all JVMs running locally");
         System.out.println("-H: produce heap dumps for all JVMs running locally");
         System.out.println("-J: produce JFRs for all JVMs running locally");
         System.out.println("-d<duration in seconds>: the duration selected for the JFRs, in seconds, default: 5");
+        System.out.println("-M: produce mallinfo() stats on Linux with glibc");
         System.out.println("-N: product Native Memory Tracks for all JVMs running locally");
         System.out.println("-T: produce thread dumps for all JVMs running locally");
     }

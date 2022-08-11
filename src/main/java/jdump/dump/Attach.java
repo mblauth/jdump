@@ -1,19 +1,20 @@
 package jdump.dump;
 
-import com.sun.tools.attach.AttachNotSupportedException;
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
+import com.sun.tools.attach.*;
 import sun.tools.attach.HotSpotVirtualMachine;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Helper for attaching to JVMs using the Attach API.
  */
 class Attach {
-
     static final Map<String, HotSpotVirtualMachine> attachedVMs = new HashMap<>();
 
     /**
@@ -47,4 +48,14 @@ class Attach {
         attachedVMs.clear();
     }
 
+    public synchronized static void loadAgent(VirtualMachineDescriptor vmd, String outputFileName) throws
+            AgentLoadException, IOException, AgentInitializationException {
+        if (!attachedVMs.containsKey(vmd.id())) throw new RuntimeException("JVM not attached");
+        // TODO: Remove hard-coded references to agent versions
+        try (var stream = Attach.class.getResourceAsStream("/agent-1.0-SNAPSHOT.jar")) {
+            File tempFile = File.createTempFile("agent-1.0-SNAPSHOT-", ".jar");
+            Files.copy(Objects.requireNonNull(stream), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            attachedVMs.get(vmd.id()).loadAgent(tempFile.getAbsolutePath(), outputFileName);
+        }
+    }
 }

@@ -15,6 +15,7 @@ public class Dumps {
         if (configuration.threadDumpForAllSet()) new ThreadDump(configuration).performForAll();
         if (configuration.jfrForAllSet()) new JFRDump(configuration).performForAll();
         if (configuration.nmtForAllSet()) new NMTDump(configuration).performForAll();
+        if (configuration.mallInfoForAllSet()) new MallInfoDump(configuration).performForAll();
     }
 
     /**
