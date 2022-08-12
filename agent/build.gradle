@@ -19,7 +19,7 @@ compileJava {
 
 jar {
     from('build/libs/agent/shared/') {
-        include '**.so'
+        include '*.so'
     }
 
     manifest {

@@ -21,7 +21,7 @@ compileJava {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
-    testRuntimeOnly project(':agent')
+    implementation project(':agent')
 }
 
 compileJava {
@@ -40,12 +40,12 @@ application {
 
 jar {
     from('agent/build/libs/') {
-        include '**.jar'
+        include '*.jar'
     }
     manifest {
         attributes(
-                "Main-Class": application.mainClass.get(),
-                "Implementation-Version": archiveVersion
+            "Main-Class": application.mainClass.get(),
+            "Implementation-Version": archiveVersion
         )
     }
 }
