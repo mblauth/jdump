@@ -53,6 +53,7 @@ jar {
 jlink {
     launcher {
         name = 'jdump'
+        jvmArgs.addAll(["--add-exports", "jdk.attach/sun.tools.attach=jdump"])
     }
 }
 
